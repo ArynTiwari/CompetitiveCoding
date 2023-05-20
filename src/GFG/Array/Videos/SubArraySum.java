@@ -38,7 +38,18 @@ public class SubArraySum {
         }
         return res;
     }
-
+    static int kadanes(int[] arr){
+        int sum=0;
+        int maxE=arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            sum+=arr[i];
+            maxE = Math.max(maxE, sum);
+            if(sum<0){
+                sum=0;
+            }
+        }
+        return maxE;
+    }
     static int maxLen(int[] arr) {
         int len = 0;
         for (int i = 0; i < arr.length; i++) {
@@ -50,7 +61,8 @@ public class SubArraySum {
     }
 
     public static void main(String[] args) {
-        int[] arr = { 1,3,0,0,2,0,0,4};
-        printSub(arr);
+        int[] arr = {1,2,3,-2,5};
+        // printSub(arr);
+        System.out.println(optmMaxSub(arr));
     }
 }

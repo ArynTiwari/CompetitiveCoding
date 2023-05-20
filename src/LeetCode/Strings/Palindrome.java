@@ -1,25 +1,26 @@
 package LeetCode.Strings;
 
 public class Palindrome {
-    static void palindrome(String str){
-        int low=0, high = str.length()-1;
-        boolean flag=true;
-        while (low<=high) {
-            if(str.charAt(low) != str.charAt(high)){
-                System.out.println("Not palindrome");
+    static void palindrome(String str) {
+        int low = 0, high = str.length() - 1;
+        boolean flag = true;
+        while (low <= high) {
+            if (str.charAt(low) != str.charAt(high)) {
                 flag = false;
             }
-            low++;high--;
+            low++;
+            high--;
         }
-        if(flag){
+        if (flag) {
             System.out.println("Yes");
-        }else{
+        } else {
             System.out.println("No");
         }
 
     }
+
     public static void main(String[] args) {
-        String str = "A21A";
-        palindrome(str);
+        String str = "A2a";
+        palindrome(str.toLowerCase());
     }
 }
