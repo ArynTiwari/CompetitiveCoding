@@ -10,7 +10,7 @@ double findMedianSortedArrays(vector<int> nums1, vector<int> nums2)
     {
         return findMedianSortedArrays(nums2, nums1);
     }
-
+    cout<<"Hello";
     int l = 0;
     int r = n1;
     while (l <= r)
