@@ -6,7 +6,8 @@
     ],
     "files.associations": {
         "string_view": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "iostream": "cpp"
     },
     "editor.fontSize": 14,
     "editor.fontFamily": "'Roboto Mono'",
