@@ -30,7 +30,7 @@ int solve(vector<int> &a, int b)
 }
 int main()
 {
-    vector<int>vec={0,0,1,1,1,0,0,1};
-    cout<<solve(vec,3)<<endl;
+    vector<int> vec = { 1, 1, 1};
+    cout << solve(vec, 3) << endl;
     return 0;
 }
