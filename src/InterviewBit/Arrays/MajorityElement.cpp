@@ -44,7 +44,7 @@ int repeatedNumber(const vector<int> &arr)
 }
 int main()
 {
-    vector<int> a = {1, 1,2, 3, 5, 7};
+    vector<int> a = {1, 1, 2, 3, 5, 7};
     cout << repeatedNumber(a);
     return 0;
 }
