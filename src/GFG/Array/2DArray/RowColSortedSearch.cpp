@@ -1,32 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
-void searc(vector<vector<int>> arr, int x)
+bool search(vector<vector<int>> a, int m, int n, int x)
 {
-    int m = arr.size();
-    int i = 0, j = arr[0].size() - 1;
-    cout<<arr[m][j]<<" ";
-    while (i < m && j >= 0)
+    int l = 0, r = n - 1;
+    while (l < m && r >= 0)
     {
-        if (arr[i][j] == x)
+        int element = a[l][r];
+        if (element == x)
         {
-            cout << i << j << endl;
-            return;
+            return true;
         }
-        else if (x > arr[i][j])
+        else if (element > x)
         {
-            i++;
+            r--;
         }
         else
         {
-            j--;
+            l++;
         }
     }
-    cout << "Not found" << endl;
+    return false;
 }
 int main()
 {
     vector<vector<int>> arr = {{10, 20, 30, 40}, {15, 25, 35, 45}, {27, 29, 37, 48}, {32, 33, 39, 50}};
-    searc(arr, 310);
-    cout<<arr[0][0]<<endl;
+    cout << search(arr, arr.size(), arr[0].size(), 50);
+    cout << arr[0][0] << endl;
     return 0;
 }
