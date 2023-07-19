@@ -1,7 +1,15 @@
-let obj = { a: 4, b: 0.5 , c: 0.35, d: 5 };
+var Stud = new Object();
+Stud.Maths = 30
+Stud.Physics = 20
+Stud.Chemistry = 10
 
-let arr = Object.values(obj);
-let min = Math.min(...arr);
-let max = Math.max(...arr);
-
-console.log( `Min value: ${min}, max value: ${max}` );
+let x = 0;
+let ans=""
+for (let i in Stud){
+    console.log(Stud.i)
+    if(Stud[i]>x){
+        x=Stud[i]
+        ans=i
+    }    
+}
+console.log(ans)

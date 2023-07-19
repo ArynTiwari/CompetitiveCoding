@@ -2,22 +2,20 @@
 using namespace std;
 int main()
 {
-    int arr[4][4] = {{10, 20, 30, 40}, {50, 60, 70, 80}, {27, 29, 47, 48}, {32, 33, 39, 50}};
-    for (int i = 0; i < 4; i++)
+    vector<vector<int>> arr = {{1, 2, 3, 4},
+                               {5, 6, 7, 8},
+                               {9, 10, 11, 12},
+                               {13, 14, 15, 16}};
+    int m = arr.size();
+    int n = arr[0].size();
+    for (int i = 0; i < n; i++)
     {
-        if (i % 2 != 0)
+        int l = 0, r = m - 1;
+        while (l <= r)
         {
-            for (int j = 3; j >= 0; j--)
-            {
-                cout << arr[i][j]<<" ";
-            }
-        }
-        else
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                cout<<arr[i][j]<<" ";
-            }
+            swap(arr[l][i], arr[r][i]);
+            l++;
+            r--;
         }
     }
 
