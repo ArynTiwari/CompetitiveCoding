@@ -1,5 +1,7 @@
 package GFG.LinkedList.Practise;
 
+import java.util.HashMap;
+
 public class LinkedList {
     static class Node {
         int data;
@@ -37,6 +39,19 @@ public class LinkedList {
         return size;
     }
 
+    public static Node insertInMid(Node head, int data) {
+        // Insert code here, return the head of modified linked list
+        Node fast = head.next, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        Node newNode = new Node(data);
+        newNode.next = slow.next;
+        slow.next = newNode;
+        return head;
+    }
+
     public static Node insertAtIndex(Node head, int data, int pos) {
         Node curr = head;
         Node prev = null;
@@ -67,7 +82,7 @@ public class LinkedList {
     }
 
     public static int midOfLL(Node head) {
-        Node slow = head, fast = head;
+        Node slow = head, fast = head.next;
         while (fast != null && fast.next != null) {
             fast = fast.next.next;
             slow = slow.next;
@@ -77,7 +92,7 @@ public class LinkedList {
 
     public static Node deleteFromEnd(Node head) {
         if (head == null) {
-            System.out.println("From DeleteFromEnd : LL is Empty");
+
             return head;
         }
         Node curr = head;
@@ -102,6 +117,14 @@ public class LinkedList {
         head.next = null;
         head = prev;
         return head;
+    }
+
+    public static Node recursiveReverse(Node curr, Node prev) {
+        if (curr == null)
+            return prev;
+        Node next = curr.next;
+        curr.next = prev;
+        return recursiveReverse(next, curr);
     }
 
     public static int searchLL(Node head, int x) {
@@ -133,10 +156,10 @@ public class LinkedList {
     }
 
     public static Node evenOdd(Node head) {
-        Node odd = head, even = head.next, evenStart = head.next;
         if (head == null || head.next == null) {
             return head;
         }
+        Node odd = head, even = head.next, evenStart = head.next;
         while (even != null) {
             odd.next = even.next;
             even.next = even.next.next;
@@ -154,22 +177,34 @@ public class LinkedList {
         if (k > n) {
             return head;
         }
-        Node last = null, slow = head, fast = head, first = head;
-        for (int i = 0; i < k; i++) {
-            fast = fast.next;
+        if (k == (n - k + 1)) {
+            return head;
         }
-        while (fast != null) {
-            fast = fast.next;
-            slow = slow.next;
-        }
-        last = slow;
-
+        Node start = head, start_prev = null;
         for (int i = 1; i < k; i++) {
-            first = first.next;
+            start_prev = start;
+            start = start.next;
         }
-        int temp = first.data;
-        first.data = last.data;
-        last.data = temp;
+        Node end = head, end_prev = null;
+        for (int i = 1; i < n - k + 1; i++) {
+            end_prev = end;
+            end = end.next;
+        }
+        if (start_prev != null) {
+            start_prev.next = end;
+        }
+        if (end_prev != null) {
+            end_prev.next = start;
+        }
+        Node temp = start.next;
+        start.next = end.next;
+        end.next = temp;
+        if (k == 1) {
+            head = end;
+        }
+        if (k == n) {
+            head = start;
+        }
         return head;
     }
 
@@ -203,12 +238,58 @@ public class LinkedList {
     }
 
     static Node evenOddData(Node head) {
-        return head;
+        Node evenStart = null, evenEnd = null, oddStart = null, oddEnd = null;
+        for (Node curr = head; curr != null; curr = curr.next) {
+            int x = curr.data;
+            if (x % 2 == 0) {
+                if (evenStart == null) {
+                    evenStart = curr;
+                    evenEnd = evenStart;
+                } else {
+                    evenEnd.next = curr;
+                    evenEnd = evenEnd.next;
+                }
+            } else {
+                if (oddStart == null) {
+                    oddStart = curr;
+                    oddEnd = oddStart;
+                } else {
+                    oddEnd.next = curr;
+                    oddEnd = oddEnd.next;
+                }
+            }
+        }
+        if (oddStart == null || evenStart == null)
+            return head;
+        evenEnd.next = oddStart;
+        oddEnd.next = null;
+        return evenStart;
+
     }
 
-    static Node addNumber(Node head) {
-
-        return head;
+    static Node addNumber(Node h1, Node h2) {
+        Node s1 = recursiveReverse(h1, null);
+        Node s2 = recursiveReverse(h2, null);
+        Node ret = new Node(0);
+        Node ans = ret;
+        int carr = 0;
+        while (s1 != null || s2 != null || carr != 0) {
+            int a = s1 != null ? s1.data : 0;
+            int b = s2 != null ? s2.data : 0;
+            int sum = a + b + carr;
+            Node newNode = new Node(sum % 10);
+            carr = sum / 10;
+            ans.next = newNode;
+            ans = ans.next;
+            s1 = (s1 != null) ? s1.next : null;
+            s2 = (s2 != null) ? s2.next : null;
+        }
+        if (ret.next == null) {
+            return ret;
+        }
+        ret = ret.next;
+        Node finalAns = recursiveReverse(ret, null);
+        return finalAns;
     }
 
     public static int loopAndLenght(Node head) {
@@ -269,6 +350,49 @@ public class LinkedList {
         }
     }
 
+    public static Node deleteDuplicate(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node curr = head;
+        while (curr != null && curr.next != null) {
+            if (curr.data == curr.next.data) {
+                curr.next = curr.next.next;
+            } else {
+                curr = curr.next;
+            }
+        }
+        return head;
+    }
+
+    public Node removeZeroSumSublists(Node head) {
+        Node dummy = new Node(0);
+        dummy.next = head;
+        HashMap<Integer, Node> mp = new HashMap<>();
+        mp.put(0, dummy);
+        int prefixSum = 0;
+        while (head != null) {
+            prefixSum += head.data;
+            if (mp.containsKey(prefixSum)) {
+                Node start = mp.get(prefixSum);
+                Node temp = start;
+                int pSum = prefixSum;
+                while (temp != head) {
+                    temp = temp.next;
+                    pSum += temp.data;
+                    if (temp != head) {
+                        mp.remove(pSum);
+                    }
+                }
+                start.next = head.next;
+            } else {
+                mp.put(prefixSum, head);
+            }
+            head = head.next;
+        }
+        return dummy.next;
+    }
+
     public static void printLL(Node node) {
         if (node == null) {
             System.out.println("LL is Empty");
@@ -292,31 +416,14 @@ public class LinkedList {
         third.next = fourth;
         fourth.next = fifth;
         fifth.next = null;
-        // head = addInFront(head, 0);
-        // addInLast(head, 60);
-        // addInLast(head, 70);
-        // addInLast(head, 80);
-        // head = insertAtIndex(head, 5, 0);
-        // head = insertAtIndex(head, 90, 8);
-        // head = deleteFromStart(head);
-        // head = deleteFromStart(head);
-        // head = insertAtIndex(head, 50, 2);
-        // head = deleteFromEnd(head);
-        // head = deleteFromEnd(head);
-        // head = reverseLL(head);
-        // System.out.println("Original ll is:- ");
-        // printLL(head);
-        // System.out.println("");
-        // System.out.println("");
-        // System.out.println("Size of ll:- " + llSize(head));
-        // System.out.println("Index of element 50 is:- " + searchLL(head, 50));
-        // System.out.println("Middle element is:- " + midOfLL(head));
-        // deleteFromGivenNode(head);
-        // head = evenOdd(head);
-        // head = swapkthnode(head, 4, 1);
-        // head = reverseInPair(2, head);
+        printLL(head);
+        System.out.println("");
         System.out.println("After function:");
-        addNumber(head);
+        // head = recursiveReverse(head, null);
+        // head = evenOddData(head);
+        // head = swapkthnode(head, 6, 1);
+        // head = deleteDuplicate(head);
+        head = insertInMid(head, 10);
         printLL(head);
         System.out.println();
     }
