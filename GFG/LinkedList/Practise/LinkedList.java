@@ -81,6 +81,23 @@ public class LinkedList {
         return head.next;
     }
 
+    public static Node removeNthFromEnd(Node head, int n) {
+
+        Node fast = head, slow = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+        if (fast == null)
+            return head.next;
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        System.out.print(slow.data);
+        return head;
+    }
+
     public static int midOfLL(Node head) {
         Node slow = head, fast = head.next;
         while (fast != null && fast.next != null) {
@@ -229,6 +246,35 @@ public class LinkedList {
             }
             prevFirst = first;
         }
+        return head;
+    }
+
+    public static Node reverseInKGroup(Node head, int k) {
+        int n = llSize(head);
+        int loop = (int) (n / k);
+        Node curr = head, prevFirst = null;
+        boolean isFirstPass = true;
+        while (loop > 0 && curr != null) {
+            Node first = curr, prev = null;
+            int count = 0;
+            while (curr != null && count < k) {
+                Node next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+                count++;
+            }
+            if (isFirstPass) {
+                head = prev;
+                isFirstPass = false;
+            } else {
+                prevFirst.next = prev;
+            }
+            prevFirst = first;
+            prevFirst.next = curr;
+            loop--;
+        }
+        System.out.println(prevFirst.data+" "+ curr.data);
         return head;
     }
 
@@ -526,7 +572,7 @@ public class LinkedList {
         second.next = third;
         third.next = fourth;
         fourth.next = fifth;
-        fifth.next = head;
+        fifth.next = null;
         // printLL(head);
         System.out.println("");
         System.out.println("After function:");
@@ -536,7 +582,8 @@ public class LinkedList {
         // removeLoop(head);
         // head = deleteDuplicate(head);
         // head = insertInMid(head, 10);
-        System.out.println(isPalindrome(head));
+        // System.out.println(isPalindrome(head));
+        head = reverseInKGroup(head, 4);
         printLL(head);
         System.out.println();
     }
