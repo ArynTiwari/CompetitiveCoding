@@ -5,7 +5,7 @@
  */
 var orderlyQueue = function (s, k) {
   if (k > 1) {
-    return s.split("").sort((a, b) => a - b);
+    return s.split("").sort((a, b) => a - b).join("");
   }
   let res = s;
   for (let l = 1; l <= s.length - 1; l++) {
@@ -17,4 +17,4 @@ var orderlyQueue = function (s, k) {
   return res;
 };
 
-console.log(orderlyQueue("baaca", 1));
+console.log(orderlyQueue("baaca", 2));
