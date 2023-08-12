@@ -81,6 +81,23 @@ public class LinkedList {
         return head.next;
     }
 
+    public static Node removeNthFromEnd(Node head, int n) {
+
+        Node fast = head, slow = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+        if (fast == null)
+            return head.next;
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        System.out.print(slow.data);
+        return head;
+    }
+
     public static int midOfLL(Node head) {
         Node slow = head, fast = head.next;
         while (fast != null && fast.next != null) {
@@ -232,9 +249,112 @@ public class LinkedList {
         return head;
     }
 
-    static Node mergeLinkedList(Node head) {
+    public static Node reverseInKGroup(Node head, int k) {
+        int n = llSize(head);
+        int loop = (int) (n / k);
+        Node curr = head, prevFirst = null;
+        boolean isFirstPass = true;
+        while (loop > 0 && curr != null) {
+            Node first = curr, prev = null;
+            int count = 0;
+            while (curr != null && count < k) {
+                Node next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+                count++;
+            }
+            if (isFirstPass) {
+                head = prev;
+                isFirstPass = false;
+            } else {
+                prevFirst.next = prev;
+            }
+            prevFirst = first;
+            prevFirst.next = curr;
+            loop--;
+        }
+        System.out.println(prevFirst.data+" "+ curr.data);
+        return head;
+    }
+
+    static Node mergeTwoLinkedList(Node l1, Node l2) {
+        if (l2 == null) {
+            return l1;
+        }
+        if (l1 == null) {
+            return l2;
+        }
+        if (l1.data <= l2.data) {
+            l1.next = mergeTwoLinkedList(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLinkedList(l1, l2.next);
+            return l2;
+        }
+    }
+
+    static Node mergeKList(Node[] arr, int k) {
+        for (int i = 0; i < k - 1; i++) {
+            Node head = mergeTwoLinkedList(arr[i], arr[i + 1]);
+            arr[i + 1] = head;
+        }
+        return arr[k - 1];
+    }
+
+    static Node cloneWithRandom(Node head) {
+        return head;
+    }
+
+    static Node lruCache(Node head) {
+        /**
+         * If the new element not in cache, we call it a miss;
+         * else we call it a hit;
+         * Most recently in in front, that is the element coming after are at front
+         * Always remove the least recenlty used(last most element)
+         * Design a data structure to support such functionality
+         * When using array, both hit and miss will take O(n) space
+         * Efficient Algo
+         * Use HashTable+Doubly Linked List
+         * 
+         */
 
         return head;
+    }
+
+    static int interSection(Node h1, Node h2) {
+
+        /**
+         * Get size of both
+         * Travere bigger Node by abs(s1-s2);
+         * Now traverse both simultaneously
+         * If they point to same node, it is our answer
+         */
+        int s1 = llSize(h1);
+        int s2 = llSize(h2);
+        // System.out.println(s1+" "+s2);
+        Node bigger = null, smaller = null;
+        if (s1 > s2) {
+            bigger = h1;
+            smaller = h2;
+        } else {
+            bigger = h2;
+            smaller = h1;
+        }
+        // System.out.println(bigger.data+" "+smaller.data);
+        int jum = Math.abs(s1 - s2);
+        for (int i = 1; i <= jum; i++) {
+            bigger = bigger.next;
+        }
+        // System.out.println("After shift "+ bigger.data);
+        while (bigger != null && smaller != null) {
+            if (bigger == smaller) {
+                return bigger.data;
+            }
+            bigger = bigger.next;
+            smaller = smaller.next;
+        }
+        return -1;
     }
 
     static Node evenOddData(Node head) {
@@ -324,30 +444,27 @@ public class LinkedList {
         if (head == null || head.next == null) {
             return;
         }
-        Node fast = head, slow = head;
+        Node fast = head, slow = head, start = head;
         while (fast != null && fast.next != null) {
             fast = fast.next.next;
             slow = slow.next;
-            if (slow == fast) {
+            if (fast == slow) {
                 break;
             }
         }
-        if (slow != fast) {
-            System.out.println("No loop found!");
-        } else {
-            Node start = head;
-            while (start != slow) {
-                start = start.next;
-                slow = slow.next;
-            }
-            System.out.println("Loop found at:- " + start.data);
-            slow = head;
-            while (slow.next != fast.next) {
-                slow = slow.next;
-                fast = fast.next;
-            }
-            fast.next = null;
+        if (fast != slow) {
+            return;
         }
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        start = slow;
+        while (start.next != slow) {
+            start = start.next;
+        }
+        start.next = null;
     }
 
     public static Node deleteDuplicate(Node head) {
@@ -393,6 +510,46 @@ public class LinkedList {
         return dummy.next;
     }
 
+    public static Node rotate(Node head, int k) {
+        // add code here
+        Node curr = head, origHead = head, newHead = null, lastNode = null, newLastNode = null;
+        while (curr.next != null) {
+            curr = curr.next;
+        }
+        lastNode = curr;
+        curr = head;
+        int i = 0;
+        while (curr != null && i < k - 1) {
+            curr = curr.next;
+            i++;
+        }
+        if (curr == lastNode) {
+            return head;
+        }
+        if (curr != null) {
+            newLastNode = curr;
+            newHead = curr.next;
+            newLastNode.next = null;
+        } else {
+            return head;
+        }
+        lastNode.next = origHead;
+        return newHead;
+    }
+
+    static boolean isPalindrome(Node h) {
+        // Your code here
+        Node newNode = reverseLL(h);
+        while (h != null) {
+            if (h.data != newNode.data) {
+                return false;
+            }
+            h = h.next;
+            newNode = newNode.next;
+        }
+        return true;
+    }
+
     public static void printLL(Node node) {
         if (node == null) {
             System.out.println("LL is Empty");
@@ -416,14 +573,17 @@ public class LinkedList {
         third.next = fourth;
         fourth.next = fifth;
         fifth.next = null;
-        printLL(head);
+        // printLL(head);
         System.out.println("");
         System.out.println("After function:");
         // head = recursiveReverse(head, null);
         // head = evenOddData(head);
         // head = swapkthnode(head, 6, 1);
+        // removeLoop(head);
         // head = deleteDuplicate(head);
-        head = insertInMid(head, 10);
+        // head = insertInMid(head, 10);
+        // System.out.println(isPalindrome(head));
+        head = reverseInKGroup(head, 4);
         printLL(head);
         System.out.println();
     }
