@@ -1,3 +1,0 @@
-function isSubSeq(s, j) {
-    
-}
