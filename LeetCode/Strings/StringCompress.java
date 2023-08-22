@@ -11,16 +11,13 @@ public class StringCompress {
                 count++;
                 i++;
             }
-            // do the assignment
-            chars[index] = curr;
-            index++;
+            chars[index++] = curr;
             if (count > 1) {
                 String count_str = "";
                 count_str += count;
                 char[] count_arr = count_str.toCharArray();
                 for (char ch : count_arr) {
-                    chars[index] = ch;
-                    index++;
+                    chars[index++] = ch;
                 }
             }
         }
