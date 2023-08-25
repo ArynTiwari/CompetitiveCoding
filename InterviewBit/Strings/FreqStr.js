@@ -12,8 +12,6 @@ function characterFrequencyString(str) {
     ans += j;
     ans += obj[j];
   }
-  console.log(ans);
-  console.log(obj);
   return ans;
 }
 
