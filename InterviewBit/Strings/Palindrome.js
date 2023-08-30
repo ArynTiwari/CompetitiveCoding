@@ -10,4 +10,4 @@ const isPalindrome = (str) => {
 
   return 1;
 };
-console.log(isPalindrome("A man, a plan, a canal: Panama"));
+console.log(isPalindrome("ghumeaylnlfxfihqghumeaylnlfdxfi"))
