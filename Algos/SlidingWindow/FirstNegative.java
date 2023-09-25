@@ -31,13 +31,13 @@ public class FirstNegative {
         for (Long long1 : anss) {
             ans[x] = long1;
             x++;
-            // System.out.println(long1);
+            System.out.print(long1 + " ");
         }
         return ans;
     }
 
     public static void main(String[] args) {
         long a[] = { -8, 2, 3, -6, 10 };
-        printFirstNegativeInteger(a, a.length, 2);
+        printFirstNegativeInteger(a, a.length, 5);
     }
 }

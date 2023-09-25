@@ -22,7 +22,7 @@ public class DailyTemperatures {
     }
 
     public static void main(String[] args) {
-        int[] a = { 73, 74, 75, 71, 69, 72, 76, 73 };
+        int[] a = { 1, 3, 4, 1, 3, 8 };
         int[] ans = dailyTemperatures(a);
         for (int i = 0; i < ans.length; i++) {
             System.out.print(ans[i] + " ");

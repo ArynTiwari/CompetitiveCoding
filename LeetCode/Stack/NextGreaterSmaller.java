@@ -40,8 +40,7 @@ public class NextGreaterSmaller {
     }
 
     public static void main(String[] args) {
-        int[] a = { 4, 12, 5, 3, 1, 2, 5, 3, 1, 2, 4, 6 };
-        greater(a);
+        int[] a = { 1 ,3 ,4 ,1 ,3 ,8 };
         System.out.println(" ");
         smaller(a);
     }
