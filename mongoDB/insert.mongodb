@@ -1,0 +1,31 @@
+use("social_network");
+
+//1. Insert One
+// db.users.insertOne({
+//   username: "mearyan__",
+//   name: "Aryan Tiwari",
+//   email: "arutiwari500@gmail.com",
+//   birthdate: "2000-05-01",
+//   location: "Pryagraj",
+//   frends: [],
+// });
+
+
+// Insert Many
+
+db.users.insertMany([
+    {
+        username:"meshruti__",
+        name:"Shruti Tiwari",
+        email:"shruti@gmail.com",
+        birtdate:"2000-12-29",
+        location:"Banaras"
+    },
+    {
+        username:"anaytiwari09",
+        name:"Aryan Tiwari",
+        email:"anaytiwari900@gmail.com",
+        birthdate:"2003-11-10",
+        location:"Pryagraj"
+    }
+])
